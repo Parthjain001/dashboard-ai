@@ -1,21 +1,32 @@
 import React, { useState } from "react";
-import ProfileTab from "./ProfileTab";
 import OrdersTab from "./OrdersTab";
+import ProfileTab from "./ProfileTab";
+import "./Dashboard.css";
 
 function Dashboard({ customerId }) {
-  const [tab, setTab] = useState("profile");
+  const [activeTab, setActiveTab] = useState("orders");
 
   return (
-    <div>
-      <button onClick={() => setTab("profile")}>Profile</button>
-      <button onClick={() => setTab("orders")}>Orders</button>
-      <div style={{ marginTop: 20 }}>
-        {tab === "profile" ? (
-          <ProfileTab customerId={customerId} />
-        ) : (
-          <OrdersTab customerId={customerId} />
-        )}
+    <div className="dashboard-container">
+      <div className="tabs">
+        <button
+          className={`tab${activeTab === "orders" ? " active" : ""}`}
+          onClick={() => setActiveTab("orders")}
+        >
+          Orders
+        </button>
+        <button
+          className={`tab${activeTab === "profile" ? " active" : ""}`}
+          onClick={() => setActiveTab("profile")}
+        >
+          Profile
+        </button>
       </div>
+      {activeTab === "orders" ? (
+        <OrdersTab customerId={customerId} />
+      ) : (
+        <ProfileTab customerId={customerId} />
+      )}
     </div>
   );
 }
